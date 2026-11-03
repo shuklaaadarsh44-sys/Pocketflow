@@ -46,3 +46,8 @@ Authenticated endpoints:
 - iPhone UI clears stale bank status safely; no secrets in browser or GitHub.
 
 Important: sandbox credentials can validate API shape, but mock FIP responses are not genuine user balances.
+
+## Non-negotiable budget: ₹0
+Never enable any provider with per-call, minimum monthly, onboarding, pilot, or recurring charges. A free demo/sandbox does **not** establish free production access. Before integration, obtain written provider confirmation that PocketFlow's own consumer PFM use is lawful and the entire pilot/production usage relevant to the user is free, including fees for the authorised FIU/partner. Never start a trial that converts to paid or requires a card without approval. Until these prerequisites are met, report `not connected`, never sample data as real.
+
+As of 2026-11-03, the Setu eligibility/pricing inquiry was sent, and no provider reply or entitlement is confirmed. The static site cannot call this adapter; it must remain fail-closed.
