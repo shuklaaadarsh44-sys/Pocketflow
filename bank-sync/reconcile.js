@@ -73,7 +73,7 @@ function reconcile(records){
   const all=deduplicate(records),suspected=[];
   for(let i=0;i<all.length;i++)for(let j=i+1;j<all.length;j++){
     if(probableInternalTransfer(all[i],all[j]))suspected.push({
-      debitId:all[i].id??all[i].fingerprint,creditId:all[j].id??all[j].fingerprint,
+      debitId:(all[i].direction==='DEBIT'?all[i]:all[j]).id??(all[i].direction==='DEBIT'?all[i]:all[j]).fingerprint,creditId:(all[i].direction==='CREDIT'?all[i]:all[j]).id??(all[i].direction==='CREDIT'?all[i]:all[j]).fingerprint,
       status:'review_required',reason:'matching amount opposite direction distinct accounts within two days'
     });
   }
