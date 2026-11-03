@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "live": false,
+  "provider": null,
+  "mode": "unconfigured",
+  "requirements": [
+    "regulated FIU or approved eligible partner",
+    "FIU onboarding and provider agreement",
+    "consented read-only access",
+    "signed callback verification",
+    "server-side secrets",
+    "authenticated encrypted storage"
+  ],
+  "statuses": [
+    "unavailable",
+    "needs_partner",
+    "consent_pending",
+    "active",
+    "syncing",
+    "stale",
+    "revoked",
+    "error"
+  ],
+  "connection": {
+    "id": "opaque identifier only",
+    "status": "needs_partner",
+    "lastSuccessfulSync": null,
+    "accountDisplay": "masked bank identifiers only",
+    "consentExpiry": null
+  },
+  "endpoints": {
+    "createConsent": "POST /api/consents",
+    "getConnections": "GET /api/connections",
+    "getAccounts": "GET /api/accounts",
+    "getTransactions": "GET /api/transactions",
+    "refresh": "POST /api/connections/{id}/refresh",
+    "revoke": "DELETE /api/connections/{id}"
+  }
+}
