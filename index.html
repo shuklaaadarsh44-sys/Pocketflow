@@ -115,6 +115,53 @@ input:focus,select:focus{outline:1px solid #85b0ff;outline-offset:1px}
 .privacy-inline{color:#8294ab}
 @media (prefers-reduced-motion:no-preference){button{transition:background-color .15s ease,transform .15s ease}button:active{transform:scale(.985)}}
 @media(max-width:360px){.hero .tile .value{font-size:16px}.secondary-actions button{font-size:10px;padding:10px 6px}}
+
+/* PocketFlow Motion Studio — GPU-friendly, restrained fintech motion */
+@keyframes pf-enter{from{opacity:0;transform:translate3d(0,13px,0)}to{opacity:1;transform:translate3d(0,0,0)}}
+@keyframes pf-card-enter{from{opacity:0;transform:translate3d(0,19px,0) scale(.985)}to{opacity:1;transform:translate3d(0,0,0) scale(1)}}
+@keyframes pf-bar-rise{from{transform:scaleY(.06);opacity:.38}to{transform:scaleY(1);opacity:1}}
+@keyframes pf-accent-breathe{0%,100%{opacity:.48;transform:translate3d(0,0,0)}50%{opacity:.85;transform:translate3d(-8px,6px,0)}}
+@keyframes pf-gloss{0%{transform:translateX(-140%) skewX(-20deg);opacity:0}13%{opacity:.35}38%{opacity:0}100%{transform:translateX(270%) skewX(-20deg);opacity:0}}
+@keyframes pf-ripple{from{transform:translate(-50%,-50%) scale(0);opacity:.28}to{transform:translate(-50%,-50%) scale(1);opacity:0}}
+@keyframes pf-dot{0%,100%{box-shadow:0 0 0 0 #d4ff2438}55%{box-shadow:0 0 0 5px #d4ff2400}}
+#app{animation:pf-enter .34s cubic-bezier(.2,.7,.3,1) both}
+#app>.hero,#app>.card,#app>.metrics,#app>.premium-actions,#app>.welcome,#app>.quick-actions{animation:pf-card-enter .48s cubic-bezier(.2,.75,.25,1) both}
+#app>.card:nth-of-type(2),#app>.metrics{animation-delay:65ms}
+#app>.card:nth-of-type(3),#app>.premium-actions{animation-delay:105ms}
+#app>.card:nth-of-type(4){animation-delay:135ms}
+.hero{isolation:isolate}
+.hero::after{content:"";display:block;position:absolute;z-index:-1;width:58%;height:160%;right:-28%;top:-36%;border-radius:50%;background:radial-gradient(ellipse,rgba(21,88,201,.48) 0%,rgba(21,88,201,.10) 42%,transparent 70%);filter:blur(17px);pointer-events:none;animation:pf-accent-breathe 7s ease-in-out infinite}
+.hero .balance{font-variant-numeric:tabular-nums}
+.primary-action{position:relative;overflow:hidden;isolation:isolate;transition:transform .22s cubic-bezier(.2,.8,.2,1),box-shadow .22s ease,filter .22s ease;will-change:auto}
+.primary-action::before{content:"";position:absolute;inset:0;width:42%;z-index:-1;background:linear-gradient(90deg,transparent,#fff9,transparent);pointer-events:none;animation:pf-gloss 8s ease-in-out infinite}
+.primary-action:active{transform:scale(.975);filter:brightness(.94)}
+.secondary-actions button,.btn,.quick-actions button{transition:transform .2s ease,border-color .2s ease,background-color .2s ease}
+.secondary-actions button:active,.btn:active,.quick-actions button:active{transform:scale(.975)}
+.bank-mini,.row{transition:background-color .2s ease,border-color .2s ease}
+.bank-mini:active,.row:active{background-color:#15233a70}
+.bar-fill{transform-origin:bottom;animation:pf-bar-rise .72s cubic-bezier(.2,.85,.25,1) both}
+.bar-group:nth-child(2) .bar-fill{animation-delay:65ms}
+.bar-group:nth-child(3) .bar-fill{animation-delay:125ms}
+.bar-group:nth-child(4) .bar-fill{animation-delay:185ms}
+.bar-group:nth-child(5) .bar-fill{animation-delay:245ms}
+.bar-group:nth-child(6) .bar-fill{animation-delay:305ms}
+.bar-group:nth-child(7) .bar-fill{animation-delay:365ms}
+.nav button{transition:color .2s ease}
+.nav-symbol{transition:background .22s ease,transform .25s cubic-bezier(.25,1.3,.4,1)}
+.nav .on .nav-symbol{transform:translateY(-2px)}
+.nav button:active .nav-symbol{transform:scale(.9)}
+.sync-chip{animation:pf-dot 3.4s ease-in-out infinite}
+.pf-tap{position:absolute;width:130px;height:130px;border-radius:50%;background:radial-gradient(circle,#ffffffbb,transparent 67%);pointer-events:none;animation:pf-ripple .56s ease-out forwards;z-index:2}
+button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+@media(hover:hover) and (pointer:fine){
+.primary-action:hover{transform:translateY(-2px);box-shadow:0 15px 36px #d4ff2424}
+.secondary-actions button:hover,.btn.secondary:hover{border-color:#4f76b8;background:#152747}
+.nav button:hover .nav-symbol{background:#ffffff0d}
+}
+@media(prefers-reduced-motion:reduce){
+#app,#app>.hero,#app>.card,#app>.metrics,#app>.premium-actions,#app>.welcome,#app>.quick-actions,.bar-fill,.hero::after,.primary-action::before,.sync-chip,.pf-tap{animation:none!important}
+.primary-action,.secondary-actions button,.btn,.quick-actions button,.nav-symbol,.nav button,.row,.bank-mini{transition:none!important}
+}
 </style></head><body><header><h1>◈ Pocket<span>Flow</span></h1><small>PRIVATE · ON DEVICE</small></header><main id="app"></main><nav id="nav" class="nav"></nav><script>
 "use strict";
 const KEY="pocketflow.personal.v1",categories=["Food","Shopping","Bills","Transport","Rent","EMI","Health","Entertainment","Travel","Groceries","Salary","Refund","Other"];
@@ -156,4 +203,18 @@ function preview(file,account){let rows=csvParse(file),h=rows.shift().map(x=>x.t
 function confirmImport(){db.transactions.push(...pending);pending=[];change("home");save()}
 function render(){let map={home,accounts,add,history,import:importPage,settings};document.getElementById("app").innerHTML=map[tab]();document.getElementById("nav").innerHTML=[["home","Home","M3 10.25 12 3l9 7.25V21h-6v-6H9v6H3z"],["history","Activity","M4 7h16M4 12h16M4 17h11"],["add","Add","M12 5v14M5 12h14"],["accounts","Accounts","M3 7h18v13H3zM3 10h18M7 4h10"],["settings","More","M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18zM12 8v.01M12 12v5"]].map(([k,v,p])=>'<button class="'+(tab===k?"on":"")+'" aria-label="'+v+'" onclick="change(\''+k+'\')"><span class="nav-symbol"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="'+p+'"/></svg></span><span class="nav-label">'+v+'</span></button>').join("");let f=document.getElementById("accountForm");if(f)f.onsubmit=e=>{e.preventDefault();let v=new FormData(f),opening=Number(v.get("opening"));if(!Number.isFinite(opening))return alert("Invalid balance");db.accounts.push({id:uid(),name:String(v.get("name")).trim(),opening,kind:v.get("kind")});save()};f=document.getElementById("transactionForm");if(f)f.onsubmit=e=>{e.preventDefault();let v=new FormData(f),amount=Number(v.get("amount")),type=v.get("type"),account=v.get("account"),dest=v.get("to");if(!Number.isFinite(amount)||amount<=0)return alert("Invalid amount");if(type==="transfer"&&(account===dest||db.accounts.length<2))return alert("Select different accounts");let base={id:uid(),date:v.get("date"),amount,note:String(v.get("note")||"").trim(),created:Date.now()};if(type==="transfer"){let group=uid();db.transactions.push({...base,type:"transfer-out",account,group,category:"Transfer"},{...base,id:uid(),type:"transfer-in",account:dest,group,category:"Transfer"})}else db.transactions.push({...base,type,account,category:v.get("category")});change("home");save()};f=document.getElementById("csvForm");if(f)f.onsubmit=async e=>{e.preventDefault();let v=new FormData(f),file=v.get("file");if(!file||!file.size)return;if(file.size>8000000)return alert("Use CSV under 8 MB");try{preview(await file.text(),v.get("account"))}catch(err){alert(err.message)}}}
 if("serviceWorker" in navigator&&location.protocol==="https:")navigator.serviceWorker.register("./sw.js").catch(()=>{});render();
+
+/* Only visual feedback; never changes or transmits financial records. */
+document.addEventListener("pointerdown",function(ev){
+ if(window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+ const btn=ev.target.closest("button.primary-action");
+ if(!btn)return;
+ const box=btn.getBoundingClientRect();
+ const ripple=document.createElement("span");
+ ripple.className="pf-tap";
+ ripple.style.left=(ev.clientX-box.left)+"px";
+ ripple.style.top=(ev.clientY-box.top)+"px";
+ btn.appendChild(ripple);
+ ripple.addEventListener("animationend",()=>ripple.remove(),{once:true});
+});
 </script></body></html>
